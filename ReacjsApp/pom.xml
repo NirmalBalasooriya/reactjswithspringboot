@@ -1,0 +1,122 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.nirmal.blog</groupId>
+  <artifactId>ReacjsApp</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.5.RELEASE</version>
+    </parent>
+
+ <dependencies>
+
+  <!-- Compile -->
+
+  <dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-web</artifactId>
+  </dependency>
+
+  <dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>jstl</artifactId>
+  </dependency>
+
+  <!-- Provided -->
+
+  <dependency>
+   <groupId>org.apache.tomcat.embed</groupId>
+   <artifactId>tomcat-embed-jasper</artifactId>
+   <scope>provided</scope>
+  </dependency>
+
+  
+
+  <!-- Runtime -->
+
+  <dependency>
+   <groupId>mysql</groupId>
+   <artifactId>mysql-connector-java</artifactId>
+   <version>5.1.6</version>
+  </dependency>
+
+ </dependencies>
+
+ <build>
+
+  <plugins>
+
+   <plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    </plugin>
+    <plugin>
+	<groupId>com.github.eirslett</groupId>
+	<artifactId>frontend-maven-plugin</artifactId>
+	<version>1.6</version>
+    <configuration>
+    	<workingDirectory>src/main/reactjs/my-app</workingDirectory>
+		<installDirectory>target</installDirectory>
+	</configuration>
+	<executions>
+		<execution>
+			<id>install node and npm</id>
+			<goals>
+				<goal>install-node-and-npm</goal>
+			</goals>
+			<configuration>
+				<nodeVersion>v10.11.0</nodeVersion>
+				<npmVersion>6.4.1</npmVersion>
+			</configuration>
+		</execution>
+		<execution>
+			<id>npm install</id>
+			<goals>
+				<goal>npm</goal>
+			</goals>
+			<configuration>
+				<arguments>install</arguments>
+			</configuration>
+		</execution>
+		<execution>
+			<id>npm run</id>
+			<goals>
+				<goal>npm</goal>
+			</goals>
+			<configuration>
+				<arguments>run-script build</arguments>
+			</configuration>
+		</execution>
+	</executions>
+   </plugin>
+   <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>            
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/src/main/webapp</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>src/main/reactjs/my-app/build</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>              
+            </configuration>            
+          </execution>
+        </executions>
+      </plugin>   
+  </plugins>
+
+ </build>  
+
+  
+</project>
